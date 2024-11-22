@@ -53,6 +53,7 @@ The form engine will have the following features:
  - function currying
  - function memoization
  - function composition
+ - dependency inversion principle
  - reusable components
  - resuable functions
  - tree-shaking

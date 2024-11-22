@@ -1,0 +1,211 @@
+{
+  "id": "certification-request-form",
+  "title": "Certification Request Form",
+  "version": "1.0.0",
+  "fields": [
+    {
+      "id": "requestName",
+      "type": "text",
+      "name": "requestName",
+      "label": "Request Name",
+      "required": true,
+      "visible": true,
+      "enabled": true,
+      "validation": [
+        {
+          "type": "required",
+          "message": "Request name is required",
+          "level": "error"
+        },
+        {
+          "type": "maxLength",
+          "params": {
+            "max": 255
+          },
+          "message": "Request name cannot exceed 255 characters",
+          "level": "error"
+        }
+      ]
+    },
+    {
+      "id": "dueDateFinalCerficate",
+      "type": "date",
+      "name": "dueDateFinalCerficate",
+      "label": "Due Date Final Certificate",
+      "visible": true,
+      "enabled": true,
+      "validation": [
+        {
+          "type": "required",
+          "message": "Due date is required when submitting",
+          "level": "error",
+          "condition": {
+            "type": "equals",
+            "value": "submit"
+          }
+        },
+        {
+          "type": "futureDate",
+          "message": "Due date must be in the future",
+          "level": "error"
+        }
+      ]
+    },
+    {
+      "id": "collectionMethod",
+      "type": "select",
+      "name": "collectionMethod",
+      "label": "Collection Method",
+      "required": true,
+      "visible": true,
+      "enabled": true,
+      "metadata": {
+        "options": [
+          { "value": "pickup", "label": "Pickup" },
+          { "value": "delivery", "label": "Delivery" }
+        ]
+      },
+      "validation": [
+        {
+          "type": "required",
+          "message": "Collection method is required",
+          "level": "error"
+        }
+      ]
+    },
+    {
+      "id": "certificateDeliveryMethod",
+      "type": "select",
+      "name": "certificateDeliveryMethod",
+      "label": "Certificate Delivery Method",
+      "visible": false,
+      "enabled": true,
+      "metadata": {
+        "options": [
+          { "value": "email", "label": "Email" },
+          { "value": "post", "label": "Post" },
+          { "value": "courier", "label": "Courier" }
+        ]
+      },
+      "dependencies": [
+        {
+          "on": "collectionMethod",
+          "type": "visibility",
+          "condition": {
+            "type": "equals",
+            "value": "delivery"
+          },
+          "action": {
+            "type": "show"
+          }
+        }
+      ],
+      "validation": [
+        {
+          "type": "required",
+          "message": "Delivery method is required when collection method is delivery",
+          "level": "error",
+          "condition": {
+            "type": "equals",
+            "value": "submit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "digitalScanRequired",
+      "type": "checkbox",
+      "name": "digitalScanRequired",
+      "label": "Digital Scan Required",
+      "visible": false,
+      "enabled": true,
+      "dependencies": [
+        {
+          "on": "certificateType",
+          "type": "visibility",
+          "condition": {
+            "type": "equals",
+            "value": "ORGANICS"
+          },
+          "action": {
+            "type": "show"
+          }
+        }
+      ],
+      "validation": [
+        {
+          "type": "required",
+          "message": "Digital scan requirement must be specified for organic certificates",
+          "level": "error",
+          "condition": {
+            "type": "equals",
+            "value": "submit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "copies",
+      "type": "number",
+      "name": "copies",
+      "label": "Number of Copies",
+      "visible": false,
+      "enabled": true,
+      "defaultValue": 1,
+      "metadata": {
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      "dependencies": [
+        {
+          "on": "digitalScanRequired",
+          "type": "visibility",
+          "condition": {
+            "type": "equals",
+            "value": true
+          },
+          "action": {
+            "type": "show"
+          }
+        }
+      ],
+      "validation": [
+        {
+          "type": "required",
+          "message": "Number of copies is required when digital scan is required",
+          "level": "error",
+          "condition": {
+            "type": "equals",
+            "value": "submit"
+          }
+        },
+        {
+          "type": "min",
+          "params": {
+            "min": 1
+          },
+          "message": "Minimum 1 copy required",
+          "level": "error"
+        },
+        {
+          "type": "max",
+          "params": {
+            "max": 10
+          },
+          "message": "Maximum 10 copies allowed",
+          "level": "error"
+        },
+        {
+          "type": "integer",
+          "message": "Number of copies must be a whole number",
+          "level": "error"
+        }
+      ]
+    }
+  ],
+  "layout": {
+    "type": "single",
+    "columns": 1
+  }
+}

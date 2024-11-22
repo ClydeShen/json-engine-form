@@ -7,7 +7,6 @@ import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import React, { memo } from 'react';
-
 import { Alert } from '@hooks/useAlert/Alert';
 import AlertSettings from '@libs/notistack/config';
 import { SnackbarProvider } from 'notistack';
@@ -16,6 +15,7 @@ import theme from './createTheme';
 export interface ThemeProviderProps {
   children?: React.ReactNode;
 }
+
 export const ThemeProvider = memo((props: ThemeProviderProps) => {
   return (
     <LocalizationProvider
@@ -40,4 +40,5 @@ export const ThemeProvider = memo((props: ThemeProviderProps) => {
     </LocalizationProvider>
   );
 });
+
 ThemeProvider.displayName = 'ThemeProvider';
