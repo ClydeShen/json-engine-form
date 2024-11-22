@@ -56,12 +56,21 @@ pnpm build
 ### Project Structure
 
 ```
-├── app/                  # Next.js app router pages
+├── app/                    # Next.js app router pages
+│   ├── example/           # Example form implementation
+│   ├── layout.tsx         # Root layout component
+│   └── page.tsx           # Home page component
 ├── src/
-│   ├── components/      # Reusable components
-│   │   └── Form/       # Form components
-│   └── theme/          # Theme configuration
-└── public/             # Static files
+│   ├── components/        # Reusable React components
+│   ├── hooks/            # Custom React hooks
+│   ├── json-config/      # JSON form configurations
+│   ├── libs/             # Utility libraries
+│   ├── theme/            # MUI theme customization
+│   └── utils/            # Helper functions
+├── docs/                  # Project documentation
+├── public/               # Static assets
+├── next.config.ts        # Next.js configuration
+└── tsconfig.json         # TypeScript configuration
 ```
 
 ## Deployment
