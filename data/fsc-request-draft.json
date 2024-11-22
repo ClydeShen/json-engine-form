@@ -1,0 +1,85 @@
+{
+    "certificateDelivery": {
+      "certificateDeliveryMethod": "OVERNIGHT_COURIER_AUCKLAND",
+      "certificateSigningOffice": "christchurch",
+      "collectionMethod": "Delivery",
+      "digitalScanRequired": true,
+      "dueDate": "2024-12-25T00:00:00.000Z",
+      "recipientAddress": {
+        "city": "Hamilton",
+        "countryName": "New Zealand",
+        "postcode": "1422",
+        "street": "30 General St\nMt. Smart"
+      },
+      "recipientContactName": "Darrell Jones",
+      "recipientEmail": "exporterwsmp4@testdfe.co.nz"
+    },
+    "certificateType": "FREE_SALE",
+    "commodity": "MEAT_PRODUCTS",
+    "consignment": {
+      "consignor": {
+        "id": "001AD00000W8oq7YAB"
+      },
+      "expectedArrivalDateTime": "2024-12-04T21:25:00.000Z",
+      "exportExitDateTime": "2024-11-29T11:00:00.000Z",
+      "items": [
+        {
+          "product": {
+            "commodity": "MEAT_PRODUCTS",
+            "commonName": "xxxxxx",
+            "description": "FSC P-1",
+            "finalProcessor": {
+              "partyId": "a17AD00002iVnF5YAK"
+            },
+            "id": "prd-01JDARA05JZAGEB92KR6BR8ACG",
+            "physicalPackage": {
+              "quantity": "100",
+              "typeCode": {
+                "code": "CS"
+              }
+            },
+            "premise": {
+              "id": "001AD00000W8oq7YAB",
+              "name": "Wine Account"
+            },
+            "productionBatchIds": [
+              "111",
+              "222",
+              "333",
+              "444"
+            ]
+          }
+        }
+      ],
+      "mainCarriageTransportMovements": [
+        {
+          "mode": "MARITIME_TRANSPORT",
+          "reference": "IDTrans123"
+        }
+      ],
+      "wineConsignment": {
+        "packaging": {
+          "quantity": null
+        }
+      }
+    },
+    "destination": {
+      "id": "JP"
+    },
+    "id": "cr-01JDAR8KREB2W3K2SW0RVZ93H1",
+    "referencedDocuments": [
+      {
+        "attachment": "sd-01JDARAFKVET8MWRPE7H2NANG6",
+        "documentType": "dt-6",
+        "information": "test doc1",
+        "relationshipTypeCode": ""
+      },
+      {
+        "attachment": "sd-01JDARC7KER32FPN9RSH06BH9Q",
+        "documentType": "dt-9",
+        "information": "test doc2",
+        "relationshipTypeCode": ""
+      }
+    ],
+    "requestName": "Request name FSC JP"
+  }

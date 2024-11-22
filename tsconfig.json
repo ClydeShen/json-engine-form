@@ -23,6 +23,7 @@
       "@hooks/*": ["./src/hooks/*"],
       "@utils/*": ["./src/utils/*"],
       "@libs/*": ["./src/libs/*"],
+      "@data/*": ["./data/*"],
       "@theme": ["./src/theme"]
     }
   },

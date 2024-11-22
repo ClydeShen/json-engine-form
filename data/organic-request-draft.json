@@ -1,0 +1,135 @@
+{
+    "certificateDelivery": {
+      "certificateDeliveryMethod": "OVERNIGHT_COURIER_CHRISTCHURCH",
+      "certificateSigningOffice": "christchurch",
+      "collectionMethod": "Delivery",
+      "copies": 4,
+      "digitalScanRequired": true,
+      "dueDate": "2024-12-25T00:00:00.000Z",
+      "recipientAddress": {
+        "city": "Hamilton",
+        "countryName": "New Zealand",
+        "postcode": "1422",
+        "street": "30 General St\nMt. Smart"
+      },
+      "recipientContactName": "Darrell Jones",
+      "recipientEmail": "exporterwsmp4@testdfe.co.nz"
+    },
+    "certificateType": "ORGANICS",
+    "commodity": "PLANT_PRODUCTS",
+    "consignment": {
+      "EORINumber": "EORI1234",
+      "consignee": {
+        "name": "Importer 123",
+        "specifiedAddress": {
+          "city": "ImpCity",
+          "countryId": "BW",
+          "postcode": "Imp123",
+          "street": "Importer address"
+        }
+      },
+      "consignor": {
+        "id": "001AD00000W8oq7YAB"
+      },
+      "containers": [
+        {
+          "affixedSeals": [
+            {
+              "sealId": "s1111"
+            }
+          ],
+          "containerId": "c111"
+        },
+        {
+          "affixedSeals": [
+            {
+              "sealId": "s222"
+            }
+          ],
+          "containerId": "c222"
+        },
+        {
+          "affixedSeals": [
+            {
+              "sealId": "s333"
+            }
+          ],
+          "containerId": "c333"
+        }
+      ],
+      "delivery": {
+        "name": "nee name",
+        "partyId": "nee ID123",
+        "specifiedAddress": {
+          "city": "nee123",
+          "countryId": "AI",
+          "postcode": "nee456",
+          "street": "nee address"
+        }
+      },
+      "exportExitDateTime": "2024-11-22T18:25:00.000Z",
+      "grossWeight": 99,
+      "items": [
+        {
+          "product": {
+            "cnCode": "cn123",
+            "commodity": "PLANT_PRODUCTS",
+            "description": "product trade-1",
+            "finalProcessor": {
+              "partyId": "001AD00000WtdsnYAB"
+            },
+            "id": "prd-01JDARQHBXZZKCPN0WQR77AJW5",
+            "netWeight": "1.4",
+            "physicalPackage": {
+              "quantity": "10",
+              "typeCode": {
+                "code": "BG"
+              }
+            },
+            "premise": {
+              "id": "001AD00000W8oq7YAB",
+              "name": "Wine Account"
+            },
+            "productionBatchIds": [
+              "lot1111",
+              "lot2222"
+            ],
+            "verifier": {
+              "partyId": "001AD00000WpdI7YAJ"
+            }
+          }
+        }
+      ],
+      "mainCarriageTransportMovements": [
+        {
+          "mode": "MARITIME_TRANSPORT",
+          "reference": "ITDN14433",
+          "registeredCountry": {
+            "id": "AQ"
+          },
+          "usedTransportMeans": "IDtransport33322"
+        }
+      ],
+      "unloadingBasePort": {
+        "id": "AFCSO"
+      },
+      "verifier": {
+        "partyId": "001AD00000WoJWTYA3"
+      },
+      "wineConsignment": {
+        "packaging": {
+          "quantity": null
+        }
+      }
+    },
+    "destination": {
+      "id": "GB"
+    },
+    "exporterDeclaration": {
+      "date": "2024-11-22T20:22:39.125Z",
+      "name": "undefined undefined"
+    },
+    "id": "cr-01JDARNHQ1TGMVVNAFYH93481S",
+    "referencedDocuments": [],
+    "requestName": "CS organic test GB"
+  }

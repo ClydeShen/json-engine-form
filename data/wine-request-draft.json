@@ -1,0 +1,139 @@
+{
+    "certificateDelivery": {},
+    "certificateType": "EXPORT_ELIGIBILITY_STATEMENT",
+    "commodity": "NZ_WINE",
+    "consignment": {
+      "carrier": {
+        "definedContacts": [
+          {
+            "email": "Freight@email.com",
+            "personName": "FreightContact name"
+          }
+        ],
+        "name": "Freight123",
+        "specifiedAddress": {
+          "city": "FreightCity",
+          "countryId": "BB",
+          "postcode": "123",
+          "street": "Freight address"
+        }
+      },
+      "consignee": {
+        "name": "Consignee name123",
+        "specifiedAddress": {
+          "city": "nee city",
+          "countryId": "AD",
+          "postcode": "nee123",
+          "street": "Consignee address123"
+        }
+      },
+      "consignor": {
+        "definedContacts": [
+          {
+            "email": "exporterwsmp4@testdfe.co.nz",
+            "personName": "Darrell Jones"
+          }
+        ],
+        "id": "001AD00000W8oq7YAB",
+        "name": "Wine Account",
+        "specifiedAddress": {
+          "city": "Hamilton",
+          "countryId": "NZ",
+          "postcode": "1422",
+          "street": "30 General St\nMt. Smart"
+        }
+      },
+      "consignorReference": "Order number123",
+      "containers": [
+        {
+          "affixedSeals": [
+            {
+              "sealId": "s1111"
+            }
+          ],
+          "containerId": "c11111"
+        }
+      ],
+      "exportExitDateTime": "2024-11-30T07:35:00.000Z",
+      "items": [
+        {
+          "product": {
+            "cnCode": "cncode4433",
+            "commodity": "NZ_WINE",
+            "declarations": [
+              {
+                "eligibilityCriteria": "el-1",
+                "market": "EU",
+                "text": "I declare that: the wine subject to this application has been produced in compliance with the Wine Notice: European Union Wine Overseas Market Access Requirements; and any geographical indication label claim complies with the Geographical Indications Registration Act 2006; and if the wine is a liqueur wine, the alcohol added to this wine is of grapevine origin."
+              },
+              {
+                "eligibilityCriteria": "el-2",
+                "market": "BRAZIL",
+                "text": "I declare that: the wine subject to this application has been produced in compliance with the Wine Notice: Brazil Wine Overseas Market Access Requirements; and the geographical indication label claim complies with the Geographical Indications Registration Act 2006; and only Vitis vinifera grapes have been used in the making of the wine."
+              },
+              {
+                "eligibilityCriteria": "el-3",
+                "market": "GREAT_BRITAIN",
+                "text": "I declare that: the wine subject to this application has been produced in compliance with the Wine Notice: Great Britain Wine Overseas Market Access Requirements."
+              }
+            ],
+            "description": "2019 Kumeu Petit Verdot",
+            "exporterReference": "IK Batch Depletion test3",
+            "grossVolume": "400,000",
+            "id": "prd-01JDAR00TZGFERZY25542T9TQZ",
+            "netVolume": 92.25,
+            "parentId": "prd-01JD3PVXXDRZ3807E5NY83KX00",
+            "premise": {
+              "id": "001AD00000W8oq7YAB",
+              "name": "Wine Account"
+            },
+            "wine": {
+              "EUCategory": "WINE",
+              "alternateWineNames": [
+                "Test"
+              ],
+              "colour": "RED",
+              "geographicIndication": "KUMEU",
+              "grapeVariety": "PETIT_VERDOT",
+              "mainNamePrefix": null,
+              "mainNameSuffix": null,
+              "package": {
+                "bottleSize": "750ml",
+                "bottlesPerCase": 12,
+                "cases": 10,
+                "extraBottles": 3,
+                "nameForDocuments": "Wine name 123"
+              },
+              "shippingFormat": "CS",
+              "specialProcess": null,
+              "style": "FORTIFIED",
+              "vintage": "2019"
+            }
+          }
+        }
+      ],
+      "mainCarriageTransportMovements": [
+        {
+          "mode": "MARITIME_TRANSPORT",
+          "reference": "Vessel Number123"
+        }
+      ],
+      "unloadingBasePort": {
+        "id": "AFCSO"
+      },
+      "wineConsignment": {
+        "packaging": {
+          "quantity": "5"
+        },
+        "shippingFormat": "CS"
+      }
+    },
+    "destination": {
+      "id": "AF"
+    },
+    "id": "cr-01JD6MKBQPC956WS4ACQ7Q72S1",
+    "referencedDocuments": [],
+    "requestName": "RequestName1234",
+    "requestedOnBehalfOfConsignor": false,
+    "undefined": null
+  }
