@@ -1,80 +1,103 @@
-# JSON Engine Form
+# JSON Engine Form Logger
 
-A powerful and flexible form engine built with Next.js and Material-UI that allows you to create dynamic forms using JSON configuration.
+A simple TypeScript library that provides logging functionality.
 
-## Development Setup
+## Installation
 
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm, yarn, or pnpm package manager
-
-### Installation
-
-1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd json-engine-form
+npm install json-engine-form
+# or
+yarn add json-engine-form
+# or
+pnpm add json-engine-form
 ```
 
+## Usage
+
+```typescript
+import { logMessage } from 'json-engine-form';
+
+// Log a message
+logMessage('Hello from JSON Engine Form!');
+// Output: [JSON-Engine-Form]: Hello from JSON Engine Form!
+```
+
+## Development
+
+1. Clone the repository
 2. Install dependencies:
-```bash
-pnpm install
-```
+   ```bash
+   pnpm install
+   ```
+3. Build the library:
+   ```bash
+   pnpm build
+   ```
+4. Run tests:
+   ```bash
+   pnpm test
+   ```
 
-3. Start the development server:
-```bash
-pnpm dev
-```
+## Testing Locally
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+There are two ways to test this library locally:
 
-### Development Workflow
+### Method 1: Using pnpm link
 
-1. Create a new branch for your feature:
-```bash
-git checkout -b feature/your-feature-name
-```
+1. In your library directory, create a global link:
+   ```bash
+   cd path/to/json-engine-form
+   pnpm link --global
+   ```
 
-2. Make your changes and test them locally
+2. Create a test project and link the library:
+   ```bash
+   mkdir test-library
+   cd test-library
+   
+   # Initialize package.json
+   echo '{
+     "name": "test-library",
+     "version": "1.0.0",
+     "main": "index.js",
+     "scripts": {
+       "test": "node index.js"
+     }
+   }' > package.json
+   
+   # Link to your library
+   pnpm link --global json-engine-form
+   ```
 
-3. Run linting to ensure code quality:
-```bash
-pnpm lint
-```
+3. Create a test file:
+   ```bash
+   echo 'const { logMessage } = require("json-engine-form");
+   logMessage("Testing the library locally!");' > index.js
+   ```
 
-4. Clean build artifacts if needed:
-```bash
-pnpm clean
-```
+4. Run the test:
+   ```bash
+   pnpm test
+   ```
 
-5. Build the project:
-```bash
-pnpm build
-```
+### Method 2: Direct Path Installation
 
-### Project Structure
+1. Create a test project:
+   ```bash
+   mkdir test-library
+   cd test-library
+   pnpm init
+   ```
 
-```
-├── app/                    # Next.js app router pages
-│   ├── example/           # Example form implementation
-│   ├── layout.tsx         # Root layout component
-│   └── page.tsx           # Home page component
-├── src/
-│   ├── components/        # Reusable React components
-│   ├── hooks/            # Custom React hooks
-│   ├── json-config/      # JSON form configurations
-│   ├── libs/             # Utility libraries
-│   ├── theme/            # MUI theme customization
-│   └── utils/            # Helper functions
-├── docs/                  # Project documentation
-├── public/               # Static assets
-├── next.config.ts        # Next.js configuration
-└── tsconfig.json         # TypeScript configuration
-```
+2. Install the library from local path:
+   ```bash
+   pnpm add ../json-engine-form
+   ```
 
-## Deployment
+3. Create and run the same test file as above.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+You should see the output: `[JSON-Engine-Form]: Testing the library locally!`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+MIT

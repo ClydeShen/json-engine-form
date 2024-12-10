@@ -1,42 +1,58 @@
 {
   "name": "json-engine-form",
   "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "clean": "rm -rf .next"
+  "description": "A simple TypeScript library with logging functionality for Next.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
   },
-  "dependencies": {
-    "@emotion/react": "^11.13.5",
-    "@emotion/styled": "^11.13.5",
-    "@hookform/resolvers": "^3.9.1",
-    "@mui/icons-material": "^6.1.8",
-    "@mui/material": "^6.1.8",
-    "@mui/system": "^6.1.8",
-    "@mui/utils": "^6.1.8",
-    "@mui/x-date-pickers": "^7.22.3",
-    "axios": "^1.7.7",
-    "dayjs": "^1.11.13",
-    "lodash": "^4.17.21",
-    "next": "15.0.3",
-    "next-auth": "^4.24.10",
-    "notistack": "^3.0.1",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "react-hook-form": "^7.53.2",
-    "react-number-format": "^5.4.2",
-    "zod": "^3.23.8"
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "next": ">=13.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.13",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.3",
-    "typescript": "^5"
+    "@types/node": ">=18.0.0",
+    "@types/react": ">=18.0.0",
+    "@types/react-dom": ">=18.0.0",
+    "next": ">=13.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "typescript",
+    "logging",
+    "nextjs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@hookform/resolvers": "^3.9.1",
+    "@mui/material": "^6.1.10",
+    "dayjs": "^1.11.13",
+    "lodash": "^4.17.21",
+    "react-hook-form": "^7.54.0",
+    "zod": "^3.23.8"
   }
 }
