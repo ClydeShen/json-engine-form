@@ -1,0 +1,808 @@
+{
+  "metaData": ["market", "commodity", "destination", "certificateType"],
+  "cards": [
+    {
+      "id": "uuid-1",
+      "title": "Request details",
+      "contentBlocks": [
+        {
+          "blockType": 1,
+          "rows": [
+            {
+              "title": "Request name",
+              "description": "Name this export request in your own words.",
+              "required": true,
+              "direction": "column",
+              "fields": [
+                {
+                  "_id": "requestName",
+                  "fieldType": 1,
+                  "required": true,
+                  "draftRequired": true,
+                  "placeholder": "E.g. Your internal reference",
+                  "maxLength": 100,
+                  "valuePath": "consignment.requestName"
+                }
+              ]
+            },
+            {
+              "title": "Due date for final certificate",
+              "description": "Date you need the certificate by",
+              "required": true,
+              "direction": "column",
+              "fields": [
+                {
+                  "_id": "dueDateFinalCerficate",
+                  "fieldType": 1,
+                  "valuePath": "certificateDelivery.dueDate",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Exporter details",
+          "description": "TODO",
+          "blockType": 1,
+          "rows": []
+        },
+        {
+          "title": "Importer details",
+          "description": "Provide the name and address of the importer",
+          "blockType": 1,
+          "rows": [
+            {
+              "direction": "column",
+              "title": "Importer name",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "consigneeName",
+                  "fieldType": 1,
+                  "placeholder": "Importer name",
+                  "valuePath": "consignment.consignee.name",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Importer address",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "consigneeAddressStreet",
+                  "fieldType": 7,
+                  "required": true,
+                  "placeholder": "Address",
+                  "valuePath": "consignment.consignee.specifiedAddress.street"
+                }
+              ]
+            },
+            {
+              "direction": "row",
+              "title": "City and postcode",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "consigneeAddressCity",
+                  "fieldType": 1,
+                  "required": true,
+                  "placeholder": "City",
+                  "valuePath": "consignment.consignee.specifiedAddress.city"
+                },
+                {
+                  "_id": "consigneeAddressPostcode",
+                  "fieldType": 1,
+                  "placeholder": "Postcode",
+                  "valuePath": "consignment.consignee.specifiedAddress.postcode",
+                  "customValidate": {
+                    "on": "some",
+                    "when": [
+                      {
+                        "on": "every",
+                        "when": [
+                          {
+                            "parameters": ["#destination", "CN"],
+                            "operator": "notEquals"
+                          },
+                          {
+                            "parameters": ["#consigneeAddressPostcode"],
+                            "operator": "isEmpty"
+                          },
+                          {
+                            "parameters": ["$isDraft", false],
+                            "operator": "equals"
+                          }
+                        ]
+                      },
+                      {
+                        "on": "every",
+                        "when": [
+                          {
+                            "parameters": [
+                              "#destination",
+                              "#consigneeAddressPostcode",
+                              "$isDraft"
+                            ],
+                            "businessRules": "PostcodeRulesForCN"
+                          }
+                        ]
+                      }
+                    ],
+                    "then": {
+                      "action": "setError",
+                      "parameters": [
+                        "#consigneeAddressPostcode",
+                        "Postcode is required"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "direction": "row",
+              "title": "Country",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "consigneeAddressCountry",
+                  "fieldType": 6,
+                  "required": true,
+                  "placeholder": "Country",
+                  "valuePath": "consignment.consignee.specifiedAddress.countryId",
+                  "typesenseProps": {
+                    "collectionName": "public:countries",
+                    "useDefaultCollectionAttributes": true
+                  }
+                }
+              ]
+            },
+            {
+              "direction": "row",
+              "title": "Economic Operators Registration and Identification number (EORI)",
+              "description": "Your importer will be able to provide this to you. Please contact your importer.",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "eoriNumber",
+                  "fieldType": 1,
+                  "required": true,
+                  "placeholder": "EORI",
+                  "valuePath": "consignment.EORINumber"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "First consignee details",
+          "description": "Provide the name and address of the first consignee in the destination market",
+          "blockType": 1,
+          "rows": [
+            {
+              "direction": "column",
+              "title": "First consignee name",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "firstConsigneeName",
+                  "fieldType": 1,
+                  "required": true,
+                  "placeholder": "First consignee name",
+                  "valuePath": "consignment.delivery.name"
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Address",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "firstConsigneeStreet",
+                  "fieldType": 1,
+                  "required": true,
+                  "placeholder": "Address",
+                  "valuePath": "consignment.delivery.specifiedAddress.street"
+                }
+              ]
+            },
+            {
+              "direction": "row",
+              "title": "City and postcode",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "firstConsigneeCity",
+                  "fieldType": 1,
+                  "required": true,
+                  "placeholder": "City",
+                  "valuePath": "consignment.delivery.specifiedAddress.city"
+                },
+                {
+                  "_id": "firstConsigneePostcode",
+                  "fieldType": 1,
+                  "required": true,
+                  "placeholder": "Postcode",
+                  "valuePath": "consignment.delivery.specifiedAddress.postcode"
+                }
+              ]
+            },
+            {
+              "direction": "row",
+              "title": "Country",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "firstConsigneeCountry",
+                  "fieldType": 6,
+                  "required": true,
+                  "placeholder": "Country",
+                  "valuePath": "consignment.delivery.specifiedAddress.countryId",
+                  "typesenseProps": {
+                    "collectionName": "public:countries",
+                    "useDefaultCollectionAttributes": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Verifier details",
+          "description": "Recognised Agency of the exporter",
+          "blockType": 1,
+          "rows": [
+            {
+              "direction": "column",
+              "title": "Agency",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "verifier",
+                  "fieldType": 6,
+                  "required": true,
+                  "placeholder": "Search verifying agency...",
+                  "valuePath": "consignment.verifier.partyId",
+                  "typesenseProps": {
+                    "collectionName": "ec:verifiers",
+                    "useDefaultCollectionAttributes": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uuid-2",
+      "title": "Transport details",
+      "contentBlocks": [
+        {
+          "blockType": 1,
+          "rows": [
+            {
+              "direction": "column",
+              "title": "Transport method",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "transportMethod",
+                  "fieldType": 8,
+                  "required": true,
+                  "options": [
+                    { "label": "Air", "value": "AIR" },
+                    { "label": "Sea", "value": "SEA" }
+                  ],
+                  "valuePath": "consignment.mainCarriageTransportMovements[0].mode"
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Ship's flag state",
+              "description": "For the vessel that leaves New Zealand waters",
+              "hide": {
+                "on": "every",
+                "when": [
+                  {
+                    "operator": "notEquals",
+                    "parameters": ["#transportMethod", "SEA"]
+                  }
+                ]
+              },
+              "required": false,
+              "paddedLeft": true,
+              "fields": [
+                {
+                  "_id": "shipsFlagState",
+                  "fieldType": 6,
+                  "required": false,
+                  "placeholder": "Ship's flag state",
+                  "valuePath": "consignment.mainCarriageTransportMovements[0].registeredCountry.id",
+                  "typesenseProps": {
+                    "collectionName": "public:countries",
+                    "useDefaultCollectionAttributes": true
+                  }
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Departure date/time",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "departureDateTime",
+                  "fieldType": 3,
+                  "required": true,
+                  "valuePath": "consignment.exportExitDateTime"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "blockType": 1,
+          "rows": [
+            {
+              "direction": "column",
+              "title": "Country of clearance/point of entry/border control post",
+              "description": "Country in which the consignment is released for free circulation",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "countryOfClearancePointOfEntryBorderControlPost",
+                  "fieldType": 6,
+                  "required": true,
+                  "placeholder": "Country",
+                  "valuePath": "consignment.unloadingBasePort.id",
+                  "typesenseProps": {
+                    "collectionName": "public:un-locode",
+                    "useDefaultCollectionAttributes": true
+                  }
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "ID of transport",
+              "required": true,
+              "description": "Voyage or airway bill number for the consignment leaving NZ",
+              "fields": [
+                {
+                  "_id": "idOfTransport",
+                  "fieldType": 1,
+                  "placeholder": "ID of transport",
+                  "valuePath": "consignment.mainCarriageTransportMovements[0].usedTransportMeans",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "International transport document number",
+              "description": "Bill of Lading, BOL number",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "internationalTransportDocumentNumber",
+                  "fieldType": 1,
+                  "placeholder": "International transport document number",
+                  "valuePath": "consignment.mainCarriageTransportMovements[0].reference",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Gross weight (kg)",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "grossWeight",
+                  "fieldType": 1,
+                  "placeholder": "Gross weight (kg)",
+                  "valuePath": "consignment.grossWeight",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Container and seal numbers",
+              "parentPath": "consignment.containers",
+              "type": 2,
+              "required": false,
+              "fields": [
+                {
+                  "_id": "containerId",
+                  "fieldType": 1,
+                  "valuePath": "containerId",
+                  "placeholder": "Container number"
+                },
+                {
+                  "_id": "containerSealId",
+                  "fieldType": 1,
+                  "valuePath": "affixedSeals[0].sealId",
+                  "placeholder": "Seal number"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uuid-3",
+      "title": "Products",
+      "cardType": "productCard",
+      "contentBlocks": [{ "blockType": 2 }]
+    },
+    {
+      "id": "uuid-4",
+      "title": "Declaration",
+      "cardType": "declarationCard",
+      "hide": {
+        "on": "some",
+        "when": [
+          { "parameters": ["#destination", "GB"], "operator": "notEquals" },
+          {
+            "parameters": ["#certificateType", "ORGANICS"],
+            "operator": "notEquals"
+          }
+        ]
+      },
+      "contentBlocks": [{ "blockType": 4 }]
+    },
+    {
+      "id": "uuid-5",
+      "title": "Supporting documents",
+      "cardType": "uploadCard",
+      "hide": {
+        "on": "every",
+        "when": [
+          {
+            "parameters": ["#certificateType", "EXPORT_ELIGIBILITY_STATEMENT"],
+            "operator": "equals"
+          }
+        ]
+      },
+      "contentBlocks": [{ "blockType": 2 }]
+    },
+    {
+      "id": "uuid-6",
+      "title": "Receiving your certificate",
+      "contentBlocks": [
+        {
+          "blockType": 1,
+          "rows": [
+            {
+              "direction": "column",
+              "title": "Certificate signing office",
+              "description": "Which office would you like to sign your certificates?",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "certificateSigningOffice",
+                  "fieldType": 5,
+                  "required": true,
+                  "valuePath": "certificateDelivery.certificateSigningOffice",
+                  "options": [
+                    { "label": "Auckland", "value": "auckland" },
+                    { "label": "Christchurch", "value": "christchurch" }
+                  ]
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Certificate collection method",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "collectionMethod",
+                  "fieldType": 8,
+                  "required": true,
+                  "valuePath": "certificateDelivery.collectionMethod",
+                  "options": [
+                    { "label": "Delivery", "value": "delivery" },
+                    { "label": "Pickup", "value": "pickup" }
+                  ]
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Certificate delivery method",
+              "required": false,
+              "paddedLeft": true,
+              "hide": {
+                "on": "every",
+                "when": [
+                  {
+                    "operator": "notEquals",
+                    "parameters": ["#collectionMethod", "delivery"]
+                  }
+                ]
+              },
+              "fields": [
+                {
+                  "_id": "certificateDeliveryMethod",
+                  "fieldType": 6,
+                  "placeholder": "Certificate delivery method",
+                  "valuePath": "certificateDelivery.deliveryMethod",
+                  "typesenseProps": {
+                    "collectionName": "ec:certificate-delivery-methods",
+                    "useDefaultCollectionAttributes": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Recipient details",
+          "blockType": 1,
+          "rows": [
+            {
+              "direction": "column",
+              "title": "Use same details as exporter",
+              "required": false,
+              "fields": [
+                {
+                  "_id": "recipientSameAsExporter",
+                  "fieldType": 4,
+                  "required": false,
+                  "valuePath": "certificateDelivery.useSameDetails"
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Recipient name",
+              "required": {
+                "on": "every",
+                "when": [
+                  {
+                    "operator": "equals",
+                    "parameters": ["#recipientSameAsExporter", true]
+                  }
+                ]
+              },
+              "fields": [
+                {
+                  "_id": "recipientContactName",
+                  "fieldType": 1,
+                  "placeholder": "Name",
+                  "valuePath": "certificateDelivery.recipientContactName",
+                  "readonly": {
+                    "on": "every",
+                    "when": [
+                      {
+                        "operator": "equals",
+                        "parameters": ["#recipientSameAsExporter", true]
+                      }
+                    ]
+                  },
+                  "defaultValue": [
+                    {
+                      "when": {
+                        "parameters": ["#recipientSameAsExporter", true],
+                        "operator": "equals"
+                      },
+                      "then": [
+                        { "action": "update", "parameters": ["#requestName"] }
+                      ]
+                    },
+                    {
+                      "when": {
+                        "parameters": ["#recipientSameAsExporter", true],
+                        "operator": "notEquals"
+                      },
+                      "then": [{ "action": "update", "parameters": [] }]
+                    }
+                  ],
+                  "customValidate": {
+                    "on": "every",
+                    "when": [
+                      {
+                        "on": "every",
+                        "when": [
+                          {
+                            "operator": "equals",
+                            "parameters": ["#recipientSameAsExporter", true]
+                          }
+                        ],
+                        "then": {
+                          "action": "setError",
+                          "parameters": [
+                            "recipientContactName",
+                            "this field is required"
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Recipient email",
+              "required": {
+                "on": "every",
+                "when": [
+                  {
+                    "operator": "equals",
+                    "parameters": ["#recipientSameAsExporter", true]
+                  }
+                ]
+              },
+              "fields": [
+                {
+                  "_id": "recipientEmail",
+                  "fieldType": 1,
+                  "placeholder": "Email",
+                  "valuePath": "certificateDelivery.recipientEmail",
+                  "readonly": {
+                    "on": "every",
+                    "when": [
+                      {
+                        "operator": "equals",
+                        "parameters": ["#recipientSameAsExporter", true]
+                      }
+                    ]
+                  },
+                  "defaultValue": [
+                    {
+                      "when": {
+                        "parameters": ["#recipientSameAsExporter", true],
+                        "operator": "equals"
+                      },
+                      "then": [
+                        { "action": "update", "parameters": ["test@gmail.com"] }
+                      ]
+                    },
+                    {
+                      "when": {
+                        "parameters": ["#recipientSameAsExporter", true],
+                        "operator": "notEquals"
+                      },
+                      "then": [{ "action": "update", "parameters": [] }]
+                    }
+                  ],
+                  "customValidate": {
+                    "on": "every",
+                    "when": [
+                      {
+                        "on": "every",
+                        "when": [
+                          {
+                            "operator": "equals",
+                            "parameters": ["#recipientSameAsExporter", true]
+                          }
+                        ],
+                        "then": {
+                          "action": "setError",
+                          "parameters": [
+                            "recipientEmail",
+                            "this field is required"
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Address",
+              "fields": [
+                {
+                  "_id": "recipientAddressStreet",
+                  "fieldType": 7,
+                  "required": false,
+                  "placeholder": "Address",
+                  "valuePath": "certificateDelivery.recipientAddress.street",
+                  "readonly": {
+                    "on": "every",
+                    "when": [
+                      {
+                        "operator": "equals",
+                        "parameters": ["#recipientSameAsExporter", true]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "direction": "row",
+              "title": "City and postcode",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "recipientCity",
+                  "fieldType": 1,
+                  "required": true,
+                  "placeholder": "City",
+                  "valuePath": "certificateDelivery.recipientAddress.city"
+                },
+                {
+                  "_id": "recipientPostcode",
+                  "fieldType": 1,
+                  "required": true,
+                  "placeholder": "Postcode",
+                  "valuePath": "certificateDelivery.recipientAddress.postcode"
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Country",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "recipientCountry",
+                  "fieldType": 6,
+                  "required": true,
+                  "placeholder": "Country",
+                  "valuePath": "certificateDelivery.recipientAddress.countryId",
+                  "typesenseProps": {
+                    "collectionName": "public:countries",
+                    "useDefaultCollectionAttributes": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "blockType": 1,
+          "rows": [
+            {
+              "direction": "column",
+              "title": "Digital scan required",
+              "required": false,
+              "fields": [
+                {
+                  "_id": "digitalScanRequired",
+                  "fieldType": 4,
+                  "required": false,
+                  "label": "I would like to have a digital scan emailed to me",
+                  "valuePath": "certificateDelivery.digitalScanRequired"
+                }
+              ]
+            },
+            {
+              "direction": "column",
+              "title": "Quantity of copies required",
+              "required": false,
+              "fields": [
+                {
+                  "_id": "copies",
+                  "fieldType": 5,
+                  "required": false,
+                  "valuePath": "certificateDelivery.copies",
+                  "options": [
+                    { "label": "1", "value": 1 },
+                    { "label": "2", "value": 2 },
+                    { "label": "3", "value": 3 },
+                    { "label": "4", "value": 4 },
+                    { "label": "5", "value": 5 }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

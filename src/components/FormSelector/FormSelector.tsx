@@ -1,5 +1,6 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
-import { LabelValue } from '@utils/types';
+import { LabelValue } from '../../types/shared';
+import React from 'react';
 import { useId } from 'react';
 import { get, useController, useFormContext } from 'react-hook-form';
 

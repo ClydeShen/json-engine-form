@@ -4,7 +4,7 @@ import {
   TextField,
   TextFieldProps,
 } from '@mui/material';
-import { LabelValue } from '@utils/types';
+import { LabelValue } from '../../types/shared';
 import { forwardRef, SyntheticEvent, useId, useState } from 'react';
 import { get, useController, useFormContext } from 'react-hook-form';
 

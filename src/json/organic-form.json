@@ -1,0 +1,846 @@
+{
+  "dependencies": {
+    "propertyNames": ["market", "commodity", "destination", "certificateType"]
+  },
+  "sections": [
+    {
+      "_id": "uuid-1",
+      "title": "Request Details",
+      "description": "Provide the details of your request.",
+      "blocks": [
+        {
+          "title": "Request Information",
+          "rows": [
+            {
+              "label": "Request Name",
+              "description": "Name this export request in your own words.",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "requestName",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": {
+                        "anyOf": [
+                          {
+                            "operator": "equals",
+                            "field": "$isDraft",
+                            "value": false
+                          },
+                          {
+                            "operator": "equals",
+                            "field": "$isDraft",
+                            "value": true
+                          }
+                        ]
+                      },
+                      "maxLength": 100
+                    },
+                    "messages": {
+                      "required": "Request name is required.",
+                      "maxLength": "Request name cannot exceed 100 characters."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Due Date for Final Certificate",
+              "description": "Date you need the certificate by",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "dueDateFinalCertificate",
+                  "type": "date",
+                  "validation": {
+                    "rules": {
+                      "required": true,
+                      "futureDate": true
+                    },
+                    "messages": {
+                      "required": "Due date is required.",
+                      "futureDate": "Due date must be in the future."
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Exporter Details",
+          "description": "Provide details about the exporter.",
+          "rows": []
+        },
+        {
+          "title": "Importer Information",
+          "rows": [
+            {
+              "label": "Importer Name",
+              "description": "Importer name",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "consigneeName",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Importer name is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Importer Address",
+              "description": "Address",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "consigneeAddressStreet",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Address is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "City and postcode",
+              "layout": {
+                "direction": "row"
+              },
+              "required": true,
+              "fields": [
+                {
+                  "_id": "consigneeAddressCity",
+                  "type": "search",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "City is required."
+                    }
+                  },
+                  "typesense": {
+                    "collectionName": "public:cities",
+                    "defaultAttributes": true
+                  }
+                },
+                {
+                  "_id": "consigneeAddressPostcode",
+                  "type": "text",
+                  "required": {
+                    "anyOf": [
+                      {
+                        "allOf": [
+                          {
+                            "operator": "equals",
+                            "field": "destination",
+                            "value": "CN"
+                          },
+                          {
+                            "operator": "isEmpty",
+                            "field": "consigneeAddressPostcode"
+                          },
+                          {
+                            "operator": "equals",
+                            "field": "$isDraft",
+                            "value": false
+                          }
+                        ]
+                      },
+                      {
+                        "businessRules": "PostcodeRulesForCN",
+                        "params": {
+                          "field": ["consigneeAddressPostcode"]
+                        }
+                      }
+                    ]
+                  },
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Postcode is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Country",
+              "description": "Select the country.",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "consigneeAddressCountry",
+                  "type": "search",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Country is required."
+                    }
+                  },
+                  "typesense": {
+                    "collectionName": "public:countries"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "EORI Number",
+              "description": "Your importer will be able to provide this to you. Please contact your importer.",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "eoriNumber",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "EORI Number is required."
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "First consignee details",
+          "description": "Provide the name and address of the first consignee in the destination market",
+          "rows": [
+            {
+              "label": "First consignee name",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "firstConsigneeName",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "First consignee name is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Address",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "firstConsigneeStreet",
+                  "type": "text",
+      
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Address is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "City and postcode",
+              "layout": {
+                "direction": "row"
+              },
+              "required": true,
+              "fields": [
+                {
+                  "_id": "firstConsigneeCity",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "City is required."
+                    }
+                  }
+                },
+                {
+                  "_id": "firstConsigneePostcode",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": {
+                        "anyOf": [
+                          {
+                            "businessRules": "verifyPostcode",
+                            "params": {
+                              "field": [
+                                "firstConsigneePostcode",
+                                "firstConsigneeCity",
+                                "firstConsigneeCountry"
+                              ]
+                            }
+                          },
+                          {
+                            "operator": "equals",
+                            "field": "$isDraft",
+                            "value": true
+                          }
+                        ]
+                      }
+                    },
+                    "messages": {
+                      "required": "Postcode is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Country",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "firstConsigneeCountry",
+                  "type": "select",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Country is required."
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Verifier details",
+          "description": "Recognised Agency of the exporter",
+          "rows": [
+            {
+              "title": "Agency",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "verifier",
+                  "type": "search",
+                  "required": true,
+                  "validation": {
+                    "rules": {
+                      "required": {
+                        "if": {
+                          "operator": "equals",
+                          "field": "$isDraft",
+                          "value": false
+                        }
+                      }
+                    },
+                    "messages": {
+                      "required": "Verifier is required."
+                    }
+                  },
+                  "typesense": {
+                    "collectionName": "ec:verifiers"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "title": "Transport Details",
+      "description": "Provide transport details.",
+      "blocks": [
+        {
+          "title": "Transport Information",
+          "rows": [
+            {
+              "label": "Transport Method",
+              "description": "Select the method of transport.",
+              "layout": {
+                "paddedLeft": true
+              },
+              "fields": [
+                {
+                  "_id": "transportMethod",
+                  "type": "select",
+                  "required": true,
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Transport method is required."
+                    }
+                  },
+                  "options": [
+                    { "label": "Air", "value": "air" },
+                    { "label": "Sea", "value": "sea" }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": "Ship's Flag State",
+              "description": "Enter the flag state of the ship.",
+              "required": true,
+              "layout": {
+                "paddedLeft": true
+              },
+              "hide": {
+                "if": {
+                  "operator": "equals",
+                  "field": "transportMethod",
+                  "value": "air"
+                }
+              },
+              "fields": [
+                {
+                  "_id": "shipsFlagState",
+                  "type": "search",
+
+                  "validation": {
+                    "rules": {
+                      "required": {
+                        "anyOf": [
+                          {
+                            "allOf": [
+                              {
+                                "operator": "equals",
+                                "field": "transportMethod",
+                                "value": "sea"
+                              },
+                              {
+                                "operator": "notEquals",
+                                "field": "transportMethod",
+                                "value": "air"
+                              },
+                              {
+                                "operator": "equals",
+                                "field": "$isDraft",
+                                "value": false
+                              }
+                            ]
+                          },{
+                            "businessRules": "verifyShipsFlagState",
+                            "params": {
+                              "field": ["shipsFlagState"]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "messages": {
+                      "required": "Ship's flag state is required."
+                    }
+                  },
+                  "typesense": {
+                    "collectionName": "public:countries"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Departure Date/Time",
+              "description": "Date and time of departure.",
+              "fields": [
+                {
+                  "_id": "departureDateTime",
+                  "type": "datetime",
+                  "required": true,
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Departure date/time is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Country of clearance/point of entry/border control post",
+              "description": "Country in which the consignment is released for free circulation",
+              "fields": [
+                {
+                  "_id": "countryOfClearance",
+                  "type": "search",
+                  "required": true,
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Country of clearance is required."
+                    }
+                  },
+                  "typesense": {
+                    "collectionName": "public:un-locode"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "ID of Transport",
+              "description": "Enter the ID of the transport.",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "transportId",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "ID of transport is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "International Transport Document Number",
+              "description": "Bill of Lading, BOL number",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "internationalTransportDocumentNumber",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "International transport document number is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Gross Weight (kg)",
+              "fields": [
+                {
+                  "_id": "grossWeight",
+                  "type": "number",
+                  "required": true,
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Gross weight is required."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "label": "Container and Seal Numbers",
+              "description": "Enter the container and seal numbers.",
+              "type": "fieldArray",
+              "required": false,
+              "propertyNames": "containers",
+              "fields": [
+                {
+                  "_id": "containerId",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": false
+                    },
+                    "messages": {
+                      "required": "Container ID is required."
+                    }
+                  }
+                },
+                {
+                  "_id": "containerSealId",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": false
+                    },
+                    "messages": {
+                      "required": "Seal number is required."
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Products",
+      "description": "Provide details about the products.",
+      "blocks": [
+        {
+          "title": "Product Information",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "title": "Declaration",
+      "blocks": [
+        {
+          "fields": []
+        }
+      ]
+    },
+    {
+      "title": "Supporting documents",
+      "blocks": [
+        {
+          "fields": []
+        }
+      ]
+    },
+    {
+      "title": "Receiving Your Certificate",
+      "blocks": [
+        {
+          "rows": [
+            {
+              "title": "Certificate signing office",
+              "description": "Which office would you like to sign your certificates?",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "certificateSigningOffice",
+                  "type": "select",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Certificate signing office is required."
+                    }
+                  },
+                  "options": [
+                    { "label": "Auckland", "value": "auckland" },
+                    { "label": "Christchurch", "value": "christchurch" }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Certificate collection method",
+              "required": true,
+              "fields": [
+                {
+                  "_id": "collectionMethod",
+                  "type": "select",
+                  "validation": {
+                    "rules": {
+                      "required": true
+                    },
+                    "messages": {
+                      "required": "Certificate collection method is required."
+                    }
+                  },
+                  "options": [
+                    { "label": "Delivery", "value": "delivery" },
+                    { "label": "Pickup", "value": "pickup" }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Certificate delivery method",
+              "required": false,
+              "hide": {
+                "if": {
+                  "operator": "equals",
+                  "field": "collectionMethod",
+                  "value": "pickup"
+                }
+              },
+              "fields": [
+                {
+                  "_id": "deliveryMethod",
+                  "type": "search",
+                  "typesense": {
+                    "collectionName": "ec:certificate-delivery-methods"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Recipient details",
+          "rows": [
+            {
+              "title": "Use same details as exporter",
+              "required": false,
+              "fields": [
+                {
+                  "_id": "recipientSameAsExporter",
+                  "type": "checkbox"
+                }
+              ]
+            },
+            {
+              "title": "Recipient name",
+              "required": {
+                "if": {
+                  "operator": "equals",
+                  "field": "recipientSameAsExporter",
+                  "value": true
+                }
+              },
+              "fields": [
+                {
+                  "_id": "recipientContactName",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": {
+                        "if": {
+                          "operator": "equals",
+                          "field": "recipientSameAsExporter",
+                          "value": true
+                        }
+                      }
+                    },
+                    "messages": {
+                      "required": "Recipient name is required."
+                    }
+                  },
+                  "defaultValue": {
+                    "if": {
+                      "operator": "equals",
+                      "field": "recipientSameAsExporter",
+                      "value": true
+                    },
+                    "then": {
+                      "action": "update",
+                      "properties": {
+                        "from": "#requestName"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "title": "Recipient Email",
+              "required": {
+                "if": {
+                  "operator": "equals",
+                  "field": "recipientSameAsExporter",
+                  "value": true
+                }
+              },
+              "fields": [
+                {
+                  "_id": "recipientEmail",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": {
+                        "if": {
+                          "operator": "equals",
+                          "field": "recipientSameAsExporter",
+                          "value": true
+                        }
+                      }
+                    },
+                    "messages": {
+                      "required": "Recipient email is required."
+                    }
+                  },
+                  "defaultValue": {
+                    "if": {
+                      "operator": "equals",
+                      "field": "recipientSameAsExporter",
+                      "value": true
+                    },
+                    "then": {
+                      "action": "update",
+                      "properties": {
+                        "from": "#requestName"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "title": "Recipient Address",
+              "required": {
+                "if": {
+                  "operator": "equals",
+                  "field": "recipientSameAsExporter",
+                  "value": true
+                }
+              },
+              "fields": [
+                {
+                  "_id": "recipientAddressStreet",
+                  "type": "text",
+                  "validation": {
+                    "rules": {
+                      "required": {
+                        "if": {
+                          "operator": "equals",
+                          "field": "recipientSameAsExporter",
+                          "value": true
+                        }
+                      }
+                    },
+                    "messages": {
+                      "required": "Recipient address is required."
+                    }
+                  },
+                  "defaultValue": {
+                    "if": {
+                      "operator": "equals",
+                      "field": "recipientSameAsExporter",
+                      "value": true
+                    },
+                    "then": {
+                      "action": "update",
+                      "properties": {
+                        "from": "#requestAddress"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
