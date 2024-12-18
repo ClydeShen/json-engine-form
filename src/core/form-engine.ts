@@ -1,4 +1,4 @@
-// import { FormConfig, BaseField } from '../types/form-schema';
+import { FormConfig, BaseField } from '../types/form-schema';
 import { get } from 'lodash';
 
 export type FormState = Record<string, any>;
@@ -35,82 +35,82 @@ export const evaluateCondition = (
   }
 };
 
-// export const isFieldVisible = (
-//   field: BaseField,
-//   formState: FormState
-// ): boolean => {
-//   if (!field.conditions || field.conditions.length === 0) {
-//     return !field.hidden;
-//   }
+export const isFieldVisible = (
+  field: BaseField,
+  formState: FormState
+): boolean => {
+  if (!field.conditions || field.conditions.length === 0) {
+    return !field.hidden;
+  }
 
-//   return field.conditions.every(condition => 
-//     evaluateCondition(condition, formState)
-//   );
-// };
+  return field.conditions.every(condition => 
+    evaluateCondition(condition, formState)
+  );
+};
 
-// export const isFieldRequired = (
-//   field: BaseField,
-//   formState: FormState
-// ): boolean => {
-//   if (!field.required) {
-//     return false;
-//   }
+export const isFieldRequired = (
+  field: BaseField,
+  formState: FormState
+): boolean => {
+  if (!field.required) {
+    return false;
+  }
 
-//   if (!field.conditions || field.conditions.length === 0) {
-//     return field.required;
-//   }
+  if (!field.conditions || field.conditions.length === 0) {
+    return field.required;
+  }
 
-//   return field.conditions.every(condition =>
-//     evaluateCondition(condition, formState)
-//   );
-// };
+  return field.conditions.every(condition =>
+    evaluateCondition(condition, formState)
+  );
+};
 
-// export const resolveValidation = (
-//   field: BaseField,
-//   formState: FormState
-// ) => {
-//   if (!field.validation) {
-//     return {};
-//   }
+export const resolveValidation = (
+  field: BaseField,
+  formState: FormState
+) => {
+  if (!field.validation) {
+    return {};
+  }
 
-//   const { rules = {}, messages = {} } = field.validation;
+  const { rules = {}, messages = {} } = field.validation;
   
-//   // If the field is conditionally required, add the required rule
-//   if (isFieldRequired(field, formState)) {
-//     return {
-//       ...rules,
-//       required: true,
-//       message: messages.required || 'This field is required',
-//     };
-//   }
+  // If the field is conditionally required, add the required rule
+  if (isFieldRequired(field, formState)) {
+    return {
+      ...rules,
+      required: true,
+      message: messages.required || 'This field is required',
+    };
+  }
 
-//   return rules;
-// };
+  return rules;
+};
 
-// export const resolveFormConfig = (
-//   config: FormConfig,
-//   formState: FormState = {}
-// ) => {
-//   const resolvedFields = Object.entries(config.fields).reduce(
-//     (acc, [fieldName, field]) => {
-//       if (!isFieldVisible(field, formState)) {
-//         return acc;
-//       }
+export const resolveFormConfig = (
+  config: FormConfig,
+  formState: FormState = {}
+) => {
+  const resolvedFields = Object.entries(config.fields).reduce(
+    (acc, [fieldName, field]) => {
+      if (!isFieldVisible(field, formState)) {
+        return acc;
+      }
 
-//       return {
-//         ...acc,
-//         [fieldName]: {
-//           ...field,
-//           required: isFieldRequired(field, formState),
-//           validation: resolveValidation(field, formState),
-//         },
-//       };
-//     },
-//     {}
-//   );
+      return {
+        ...acc,
+        [fieldName]: {
+          ...field,
+          required: isFieldRequired(field, formState),
+          validation: resolveValidation(field, formState),
+        },
+      };
+    },
+    {}
+  );
 
-//   return {
-//     ...config,
-//     fields: resolvedFields,
-//   };
-// };
+  return {
+    ...config,
+    fields: resolvedFields,
+  };
+};
