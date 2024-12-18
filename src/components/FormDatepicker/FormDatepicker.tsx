@@ -29,7 +29,7 @@ export const FormDatepicker = (props: FormTextfieldProps) => {
   } = useController({ name, control });
   const { ref, value, ...fieldProps } = field;
   const error = get(errors, name);
-  const onChange = (value) => {
+  const onChange = (value: any) => {
     field.onChange(value);
   };
   return (

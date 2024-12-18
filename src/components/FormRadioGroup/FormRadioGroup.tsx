@@ -27,7 +27,6 @@ export const FormRadioGroup = (props: FormRadioGroupProps) => {
     id,
     name,
     errorMessage,
-    disabled,
     defaultValue = '',
     options,
     label,
