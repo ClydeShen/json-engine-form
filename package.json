@@ -2,14 +2,14 @@
   "name": "json-engine-form",
   "version": "0.1.0",
   "description": "A simple TypeScript library with logging functionality for Next.js",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "sideEffects": false,
@@ -20,7 +20,7 @@
     "clean": "rm -rf dist",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build": "npm run clean && tsc",
     "prepare": "npm run build"
   },
   "peerDependencies": {
