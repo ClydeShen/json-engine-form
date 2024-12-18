@@ -25,7 +25,6 @@ export const FormSelector = (props: FormTextfieldProps) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     field.onChange(e.target.value);
   };
-  // console.log(name, { field, errors, error });
   return (
     <TextField
       {...fieldProps}

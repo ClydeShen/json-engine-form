@@ -1,4 +1,4 @@
 export interface LabelValue {
     label: string;
-    value: string | boolean;
+    value: string | number;
 }

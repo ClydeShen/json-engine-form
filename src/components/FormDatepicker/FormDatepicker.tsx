@@ -1,6 +1,7 @@
-import { Dayjs } from '@libs/dayjs';
+
 import { TextFieldProps, useTheme } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
+import React from 'react';
 import { useId } from 'react';
 import { get, useController, useFormContext } from 'react-hook-form';
 
@@ -28,7 +29,7 @@ export const FormDatepicker = (props: FormTextfieldProps) => {
   } = useController({ name, control });
   const { ref, value, ...fieldProps } = field;
   const error = get(errors, name);
-  const onChange = (value: Dayjs | null) => {
+  const onChange = (value) => {
     field.onChange(value);
   };
   return (
